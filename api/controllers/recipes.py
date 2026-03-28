@@ -21,13 +21,14 @@ def read_one(db: Session, recipe_id):
     return db.query(models.Recipe).filter(models.Recipe.id == recipe_id).first()
 
 def update(db: Session, recipe_id, recipes):
-    db_recipes = db.query(models.Recipe).filter(models.Recipe.id == recipe_id)
+    db_recipe = db.query(models.Recipe).filter(models.Recipe.id == recipe_id)
 
     update_data = recipes.model_dump(exclude_unset=True)
-    db_recipes.update(update_data, synchronize_session=False)
+
+    db_recipe.update(update_data, synchronize_session=False)
     db.commit()
-    db_recipes.first()
-    return db_recipes
+    db_recipe.first()
+    return db_recipe.first()
 
 def delete(db: Session, recipe_id):
     db_recipes = db.query(models.Recipe).filter(models.Recipe.id == recipe_id)
